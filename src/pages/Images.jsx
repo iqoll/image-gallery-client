@@ -1,20 +1,31 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import AddModal from './AddModal'
 
 function Images() {
 	const [images, setImages] = useState([])
+	const [isModalOpen, setIsModalOpen] = useState(false)
+
+	const openModal = () => {
+		setIsModalOpen(true)
+	}
+
+	const closeModal = () => {
+		setIsModalOpen(false)
+	}
+
+	const fetchAllImages = async () => {
+		try {
+			const res = await axios.get('http://localhost:5000/images')
+			setImages(res.data)
+			console.log(res.data)
+		} catch (error) {
+			console.log(error)
+		}
+	}
 
 	useEffect(() => {
-		const fetchAllImages = async () => {
-			try {
-				const res = await axios.get('http://localhost:5000/images')
-				setImages(res.data)
-				console.log(res.data)
-			} catch (error) {
-				console.log(error)
-			}
-		}
 		fetchAllImages()
 	}, [])
 
@@ -46,9 +57,17 @@ function Images() {
 					</button>
 				</div>
 
-				<button className='py-3 px-14 text-lg font-normal text-white bg-black border border-black rounded-md shadow-2xl duration-200 hover:bg-white hover:text-black'>
-					<Link to={'/add'}>Upload</Link>
+				<button
+					onClick={openModal}
+					className='py-3 px-14 text-lg font-normal text-white bg-black border border-black rounded-md shadow-2xl duration-200 hover:bg-white hover:text-black'
+				>
+					Upload
 				</button>
+				<AddModal
+					isOpen={isModalOpen}
+					onRequestClose={closeModal}
+					fetchAllImages={fetchAllImages}
+				/>
 			</div>
 
 			{/* Gallery */}
