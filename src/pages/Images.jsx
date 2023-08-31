@@ -116,6 +116,8 @@ function Images() {
 										<UpdateModal
 											isOpen={isUpdateModalOpen}
 											onRequestClose={closeUpdateModal}
+											fetchAllImages={fetchAllImages}
+											imageId={image.id}
 										/>
 									</div>
 								</div>

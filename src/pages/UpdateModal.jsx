@@ -1,26 +1,26 @@
 import Modal from 'react-modal'
 import { useState } from 'react'
-import { useLocation } from 'react-router-dom'
 import axios from 'axios'
 
-function UpdateModal({ isOpen, onRequestClose }) {
+function UpdateModal({ isOpen, onRequestClose, imageId, fetchAllImages }) {
 	const [images, setImages] = useState({
 		name: '',
 		url: '',
 		type: '',
 	})
 
-	const location = useLocation()
-	const imageId = location.pathname.split('/')[2]
-
 	const handleChange = (e) => {
 		setImages((prev) => ({ ...prev, [e.target.name]: e.target.value }))
 	}
 
+	console.log(images)
+
 	const handleClick = async (e) => {
 		e.preventDefault()
 		try {
-			await axios.put('http://localhost:5000/images/:id', images)
+			await axios.put(`http://localhost:5000/images/${imageId}`, images)
+			onRequestClose()
+			fetchAllImages()
 		} catch (error) {
 			console.log(error)
 		}
