@@ -1,13 +1,17 @@
-import { useState } from 'react'
 import Modal from 'react-modal'
+import { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import axios from 'axios'
 
-function AddModal({ isOpen, onRequestClose, fetchAllImages }) {
+function UpdateModal({ isOpen, onRequestClose }) {
 	const [images, setImages] = useState({
-		url: '',
 		name: '',
+		url: '',
 		type: '',
 	})
+
+	const location = useLocation()
+	const imageId = location.pathname.split('/')[2]
 
 	const handleChange = (e) => {
 		setImages((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -16,9 +20,7 @@ function AddModal({ isOpen, onRequestClose, fetchAllImages }) {
 	const handleClick = async (e) => {
 		e.preventDefault()
 		try {
-			await axios.post('http://localhost:5000/images', images)
-			onRequestClose()
-			fetchAllImages()
+			await axios.put('http://localhost:5000/images/:id', images)
 		} catch (error) {
 			console.log(error)
 		}
@@ -28,10 +30,10 @@ function AddModal({ isOpen, onRequestClose, fetchAllImages }) {
 		<Modal
 			isOpen={isOpen}
 			onRequestClose={onRequestClose}
-			contentLabel='Add Image Modal'
+			contentLabel='Update Image Modal'
 			style={{
 				overlay: {
-					backgroundColor: 'rgba(0, 0, 0, 0.5)',
+					backgroundColor: 'rgba(0, 0, 0, 0.1)',
 				},
 				content: {
 					backgroundColor: 'white',
@@ -43,7 +45,7 @@ function AddModal({ isOpen, onRequestClose, fetchAllImages }) {
 			}}
 		>
 			<div className='flex flex-col items-center justify-center min-h-screen relative'>
-				<h2 className='mb-4 font-bold text-2xl'>Add a New Image</h2>
+				<h2 className='mb-4 font-bold text-2xl'>Update an Image</h2>
 				<div className='p-16 bg-slate-200 rounded-xl shadow-2xl'>
 					<div className='flex flex-col space-y-3'>
 						<input
@@ -71,7 +73,7 @@ function AddModal({ isOpen, onRequestClose, fetchAllImages }) {
 							onClick={handleClick}
 							className='px-3 py-2 bg-blue-600 rounded-full text-white font-bold'
 						>
-							Add Image
+							Update Image
 						</button>
 						{/* Close Modal Button */}
 						<button
@@ -99,4 +101,4 @@ function AddModal({ isOpen, onRequestClose, fetchAllImages }) {
 		</Modal>
 	)
 }
-export default AddModal
+export default UpdateModal

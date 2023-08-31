@@ -1,18 +1,26 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import axios from 'axios'
 import AddModal from './AddModal'
+import UpdateModal from './UpdateModal'
 
 function Images() {
 	const [images, setImages] = useState([])
-	const [isModalOpen, setIsModalOpen] = useState(false)
+	const [isAddModalOpen, setIsAddModalOpen] = useState(false)
+	const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
 
-	const openModal = () => {
-		setIsModalOpen(true)
+	const openAddModal = () => {
+		setIsAddModalOpen(true)
+	}
+	const openUpdateModal = () => {
+		setIsUpdateModalOpen(true)
 	}
 
-	const closeModal = () => {
-		setIsModalOpen(false)
+	const closeAddModal = () => {
+		setIsAddModalOpen(false)
+	}
+
+	const closeUpdateModal = () => {
+		setIsUpdateModalOpen(false)
 	}
 
 	const fetchAllImages = async () => {
@@ -58,14 +66,14 @@ function Images() {
 				</div>
 
 				<button
-					onClick={openModal}
+					onClick={openAddModal}
 					className='py-3 px-14 text-lg font-normal text-white bg-black border border-black rounded-md shadow-2xl duration-200 hover:bg-white hover:text-black'
 				>
 					Upload
 				</button>
 				<AddModal
-					isOpen={isModalOpen}
-					onRequestClose={closeModal}
+					isOpen={isAddModalOpen}
+					onRequestClose={closeAddModal}
 					fetchAllImages={fetchAllImages}
 				/>
 			</div>
@@ -73,7 +81,7 @@ function Images() {
 			{/* Gallery */}
 			<div className='p-20 grid gap-4 md:grid-cols-3 lg:grid-cols-4'>
 				{images.map((image) => (
-					<div className='relative group' key={images.id}>
+					<div className='relative group' key={image.id}>
 						{image.url && (
 							<img src={image.url} alt={image.name} className='w-74' />
 						)}
@@ -81,9 +89,35 @@ function Images() {
 							<div className='flex justify-between'>
 								<div className='font-normal'>
 									<p className='text-sm'>{image.name}</p>
-									<p className='text-xs'>
-										{image.likes} Likes - {image.type}
-									</p>
+									<div className='flex space-x-2 items-center'>
+										<p className='text-xs'>
+											{image.likes} Likes - {image.type}
+										</p>
+										<button
+											className='hover:scale-110'
+											onClick={openUpdateModal}
+										>
+											<svg
+												xmlns='http://www.w3.org/2000/svg'
+												width='20'
+												height='20'
+												viewBox='0 0 24 24'
+											>
+												<path
+													fill='none'
+													stroke='currentColor'
+													strokeLinecap='round'
+													strokeLinejoin='round'
+													strokeWidth='2'
+													d='M4 20h4L18.5 9.5a2.828 2.828 0 1 0-4-4L4 16v4m9.5-13.5l4 4'
+												/>
+											</svg>
+										</button>
+										<UpdateModal
+											isOpen={isUpdateModalOpen}
+											onRequestClose={closeUpdateModal}
+										/>
+									</div>
 								</div>
 								<button className='flex items-center hover:scale-110'>
 									<svg
