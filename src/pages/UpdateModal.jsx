@@ -1,19 +1,27 @@
 import Modal from 'react-modal'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 
-function UpdateModal({ isOpen, onRequestClose, imageId, fetchAllImages }) {
-	const [images, setImages] = useState({
-		name: '',
-		url: '',
-		type: '',
-	})
+function UpdateModal({
+	isOpen,
+	onRequestClose,
+	fetchAllImages,
+	initialImage,
+	imageId,
+}) {
+	const [images, setImages] = useState({ ...initialImage })
 
-	const handleChange = (e) => {
-		setImages((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+	useEffect(() => {
+		setImages({ ...initialImage })
+	}, [initialImage])
+
+	const handleChange = (event) => {
+		const { name, value } = event.target
+		setImages((prevImage) => ({
+			...prevImage,
+			[name]: value,
+		}))
 	}
-
-	console.log(images)
 
 	const handleClick = async (e) => {
 		e.preventDefault()
@@ -52,6 +60,7 @@ function UpdateModal({ isOpen, onRequestClose, imageId, fetchAllImages }) {
 							className='p-2 rounded-md'
 							type='text'
 							name='name'
+							defaultValue={images.name || ''}
 							placeholder='name'
 							onChange={handleChange}
 						/>
@@ -59,6 +68,7 @@ function UpdateModal({ isOpen, onRequestClose, imageId, fetchAllImages }) {
 							className='p-2 rounded-md'
 							type='text'
 							name='type'
+							defaultValue={images.type || ''}
 							placeholder='type'
 							onChange={handleChange}
 						/>
@@ -66,6 +76,7 @@ function UpdateModal({ isOpen, onRequestClose, imageId, fetchAllImages }) {
 							className='p-2 rounded-md'
 							type='text'
 							name='url'
+							defaultValue={images.url || ''}
 							placeholder='image url'
 							onChange={handleChange}
 						/>

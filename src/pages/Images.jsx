@@ -5,13 +5,15 @@ import UpdateModal from './UpdateModal'
 
 function Images() {
 	const [images, setImages] = useState([])
+	const [selectedImageId, setSelectedImageId] = useState(null)
 	const [isAddModalOpen, setIsAddModalOpen] = useState(false)
 	const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
 
 	const openAddModal = () => {
 		setIsAddModalOpen(true)
 	}
-	const openUpdateModal = () => {
+	const openUpdateModal = (imageId) => {
+		setSelectedImageId(imageId)
 		setIsUpdateModalOpen(true)
 	}
 
@@ -27,7 +29,6 @@ function Images() {
 		try {
 			const res = await axios.get('http://localhost:5000/images')
 			setImages(res.data)
-			console.log(res.data)
 		} catch (error) {
 			console.log(error)
 		}
@@ -95,7 +96,7 @@ function Images() {
 										</p>
 										<button
 											className='hover:scale-110'
-											onClick={openUpdateModal}
+											onClick={() => openUpdateModal(image.id)}
 										>
 											<svg
 												xmlns='http://www.w3.org/2000/svg'
@@ -114,10 +115,11 @@ function Images() {
 											</svg>
 										</button>
 										<UpdateModal
-											isOpen={isUpdateModalOpen}
+											isOpen={isUpdateModalOpen && selectedImageId === image.id}
 											onRequestClose={closeUpdateModal}
 											fetchAllImages={fetchAllImages}
 											imageId={image.id}
+											initialImage={image}
 										/>
 									</div>
 								</div>
