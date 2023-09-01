@@ -34,6 +34,15 @@ function Images() {
 		}
 	}
 
+	const handleLike = async (imageId) => {
+		try {
+			await axios.put(`http://localhost:5000/images/${imageId}/like`)
+			fetchAllImages()
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
 	useEffect(() => {
 		fetchAllImages()
 	}, [])
@@ -123,7 +132,10 @@ function Images() {
 										/>
 									</div>
 								</div>
-								<button className='flex items-center hover:scale-110'>
+								<button
+									onClick={() => handleLike(image.id)}
+									className='flex items-center hover:scale-110'
+								>
 									<svg
 										xmlns='http://www.w3.org/2000/svg'
 										width='24'
