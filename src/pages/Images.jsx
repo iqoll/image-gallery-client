@@ -34,6 +34,20 @@ function Images() {
 		}
 	}
 
+	const handleSearch = async (e) => {
+		const q = e.target.value
+		console.log(q)
+		try {
+			const res = await axios.get(`http://localhost:5000/images/search`, {
+				params: { name: q },
+			})
+			console.log(res.data)
+			setImages(res.data)
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
 	const handleLike = async (imageId) => {
 		try {
 			await axios.put(`http://localhost:5000/images/${imageId}/like`)
@@ -70,6 +84,7 @@ function Images() {
 						type='text'
 						placeholder='Search'
 						className='ml-6 border-none md:w-80 placeholder:font-thin focus:outline-none'
+						onChange={handleSearch}
 					/>
 					<button>
 						<svg
