@@ -16,7 +16,10 @@ function AddModal({ isOpen, onRequestClose, fetchAllImages }) {
 	const handleClick = async (e) => {
 		e.preventDefault()
 		try {
-			await axios.post('http://localhost:5000/images', images)
+			await axios.post(
+				'https://image-gallery-crud-1d09d598ac16.herokuapp.com/images',
+				images
+			)
 			onRequestClose()
 			fetchAllImages()
 		} catch (error) {

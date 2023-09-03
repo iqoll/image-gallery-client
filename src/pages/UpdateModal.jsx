@@ -26,7 +26,10 @@ function UpdateModal({
 	const handleClick = async (e) => {
 		e.preventDefault()
 		try {
-			await axios.put(`http://localhost:5000/images/${imageId}`, images)
+			await axios.put(
+				`https://image-gallery-crud-1d09d598ac16.herokuapp.com/images/${imageId}`,
+				images
+			)
 			onRequestClose()
 			fetchAllImages()
 		} catch (error) {

@@ -27,7 +27,9 @@ function Images() {
 
 	const fetchAllImages = async () => {
 		try {
-			const res = await axios.get('http://localhost:5000/images')
+			const res = await axios.get(
+				'https://image-gallery-crud-1d09d598ac16.herokuapp.com/images'
+			)
 			setImages(res.data)
 		} catch (error) {
 			console.log(error)
@@ -38,9 +40,12 @@ function Images() {
 		const q = e.target.value
 		console.log(q)
 		try {
-			const res = await axios.get(`http://localhost:5000/images/search`, {
-				params: { name: q },
-			})
+			const res = await axios.get(
+				`https://image-gallery-crud-1d09d598ac16.herokuapp.com/images/search`,
+				{
+					params: { name: q },
+				}
+			)
 			console.log(res.data)
 			setImages(res.data)
 		} catch (error) {
@@ -50,7 +55,9 @@ function Images() {
 
 	const handleLike = async (imageId) => {
 		try {
-			await axios.put(`http://localhost:5000/images/${imageId}/like`)
+			await axios.put(
+				`https://image-gallery-crud-1d09d598ac16.herokuapp.com/images/${imageId}/like`
+			)
 			fetchAllImages()
 		} catch (error) {
 			console.log(error)
@@ -64,7 +71,9 @@ function Images() {
 			if (!isConfirmed) {
 				return
 			}
-			await axios.delete(`http://localhost:5000/images/${imageId}`)
+			await axios.delete(
+				`https://image-gallery-crud-1d09d598ac16.herokuapp.com/images/${imageId}`
+			)
 			fetchAllImages()
 		} catch (error) {
 			console.log(error)
