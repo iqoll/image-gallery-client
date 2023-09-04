@@ -27,7 +27,7 @@ function UpdateModal({
 		e.preventDefault()
 		try {
 			await axios.put(
-				`https://book-crud-heroku-679d519b0481.herokuapp.com/images/${imageId}`,
+				`https://image-gallery-crud-1d09d598ac16.herokuapp.com/images/${imageId}`,
 				images
 			)
 			onRequestClose()
