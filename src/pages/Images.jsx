@@ -28,7 +28,7 @@ function Images() {
 	const fetchAllImages = async () => {
 		try {
 			const res = await axios.get(
-				'https://image-gallery-crud-1d09d598ac16.herokuapp.com/images'
+				'https://book-crud-heroku-679d519b0481.herokuapp.com/images'
 			)
 			setImages(res.data)
 		} catch (error) {
@@ -41,7 +41,7 @@ function Images() {
 		console.log(q)
 		try {
 			const res = await axios.get(
-				`https://image-gallery-crud-1d09d598ac16.herokuapp.com/images/search`,
+				`https://book-crud-heroku-679d519b0481.herokuapp.com/images/search`,
 				{
 					params: { name: q },
 				}
@@ -56,7 +56,7 @@ function Images() {
 	const handleLike = async (imageId) => {
 		try {
 			await axios.put(
-				`https://image-gallery-crud-1d09d598ac16.herokuapp.com/images/${imageId}/like`
+				`https://book-crud-heroku-679d519b0481.herokuapp.com/images/${imageId}/like`
 			)
 			fetchAllImages()
 		} catch (error) {
@@ -72,7 +72,7 @@ function Images() {
 				return
 			}
 			await axios.delete(
-				`https://image-gallery-crud-1d09d598ac16.herokuapp.com/images/${imageId}`
+				`https://book-crud-heroku-679d519b0481.herokuapp.com/images/${imageId}`
 			)
 			fetchAllImages()
 		} catch (error) {

@@ -17,7 +17,7 @@ function AddModal({ isOpen, onRequestClose, fetchAllImages }) {
 		e.preventDefault()
 		try {
 			await axios.post(
-				'https://image-gallery-crud-1d09d598ac16.herokuapp.com/images',
+				'https://book-crud-heroku-679d519b0481.herokuapp.com/images',
 				images
 			)
 			onRequestClose()
